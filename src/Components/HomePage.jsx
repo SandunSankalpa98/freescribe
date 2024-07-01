@@ -23,7 +23,7 @@ function HomePage(props) {
             setFile(tempFile)
         }} className="hidden" type="file" accept=".mp3,.wave"/></label> a mp3 file
       </p>
-      <p className="italic text-slate-500">Free now free forever</p>
+      <p className="italic text-slate-400">Free now free forever</p>
     </main>
   );
 }
