@@ -2,19 +2,28 @@ import React, { useState } from "react";
 
 import Header from "./Components/Header";
 import HomePage from "./Components/HomePage";
+import FileDisplay from "./Components/FileDisplay";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [file, setFile] = useState(null);
+  const [audioStream, setAudioStream] = useState(null);
+  const isAudioAvailable = file || audioStream;
+
+  function handleAudioReset() {
+    setFile(null);
+    setAudioStream(null);
+  }
 
   return (
     <div className="flex flex-col max-w-[1000px] mx-auto w-full">
       <section className="min-h-screen flex flex-col">
         <Header />
-        <HomePage/>
-
-        <footer>{/* Footer content goes here */}</footer>
+        {isAudioAvailable ? (
+          <FileDisplay file={file} handleAudioReset={handleAudioReset} audioStream={audioStream}/>
+        ) : (
+          <HomePage setFile={setFile} setAudioStream={setAudioStream} />
+        )}
       </section>
-      <h1>hello</h1>
     </div>
   );
 }
