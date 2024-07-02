@@ -10,7 +10,34 @@ function HomePage(props) {
   const mediaRecorder = useRef(null)
   const mimeType = 'audio/webm'
 
-  
+  async function startRecording(){
+    let tempStream
+    console.log('Start Recording')
+    try{
+        const streamData = navigator.mediaDevices.getUserMedia({
+            audio:true,
+            video:false
+        })
+        tempStream = streamData
+    }catch(err){
+        console.log(err.message)
+        return
+    }
+    // create new media recorder instance using this stream
+    const media = new MediaRecorder(tempStream, { type: mimeType })
+    mediaRecorder.current = media
+
+    mediaRecorder.current.start()
+    let localAudioChunks = []
+    mediaRecorder.current.ondataavailable = (event) => {
+        if (typeof event.data === 'undefined') { return }
+        if (event.data.size === 0) { return }
+        localAudioChunks.push(event.data)
+    }
+    setAudioChunks(localAudioChunks)
+  }
+
+
 
   return (
     <main className="flex-1  p-4 flex flex-col gap-3 text-center sm:gap-4  justify-center pb-20">
