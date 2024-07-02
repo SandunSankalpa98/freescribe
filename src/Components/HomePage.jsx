@@ -5,7 +5,7 @@ function HomePage(props) {
   const {setAudioStream, setFile} = props
   const [recordingStatus, setRecordingStatus] = useState('inactive')
   const [audioChunks, setAudioChunks] = useState([])
-  const [duration, setduration] = useState(0)
+  const [duration, setDuration] = useState(0)
 
   const mediaRecorder = useRef(null)
   const mimeType = 'audio/webm'
@@ -50,6 +50,17 @@ function HomePage(props) {
     }
   }
 
+  useEffect(() => {
+    if(recordingStatus === 'inactive') { return }
+
+    const interval = setInterval(() => {
+        setDuration(curr => curr + 1)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  })
+  
+
 
 
   return (
@@ -61,9 +72,16 @@ function HomePage(props) {
         Record <span className="text-blue-400">&rarr;</span> Transcribe
         <span className="text-blue-400">&rarr;</span> Translate
       </h3>
-      <button className="flex items-center text-base justify-between gap-4 mx-auto w-72 max-w-full my-4 specialBtn px-4 py-2 rounded-xl">
-        <p>Record</p>
-        <i className="fa-solid fa-microphone"></i>
+      <button onClick={recordingStatus === 'recording' ? stopRecording : startRecording} className="flex items-center text-base justify-between gap-4 mx-auto w-72 max-w-full my-4 specialBtn px-4 py-2 rounded-xl">
+        <p className="text-blue-400">{recordingStatus === 'inactive'? 'Record' : `Stop recording`}</p>
+        <div className="flex items-center gap-2">
+            {duration !== 0 && (
+                <p className="text-sm">{duration}s</p>
+            )}
+            <i className={"fa-solid duration-200 fa-microphone" + (recordingStatus === 'recording' ? ' text-rose-300' : '')}></i>
+
+        </div>
+        
       </button>
       <p className="text-base">Or <label className="text-blue cursor-pointer hover:text-blue-600 duration-200">
         Uplaod 
