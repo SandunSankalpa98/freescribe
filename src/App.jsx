@@ -10,7 +10,7 @@ import Transcribing from "./Components/Transcribing";
 function App() {
   const [file, setFile] = useState(null);
   const [audioStream, setAudioStream] = useState(null);
-  const [output, setOutput] = useState(null);
+  const [output, setOutput] = useState(true);
   const [loading, setLoading] = useState(true);
 
 
