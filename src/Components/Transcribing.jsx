@@ -1,4 +1,6 @@
 import React from "react";
+import Transcription from "./Transcription";
+import Translation from "./Translation";
 
 function Transcribing(props) {
   const { downloading } = props;
@@ -23,6 +25,7 @@ function Transcribing(props) {
           );
         })}
       </div>
+
     </div>
   );
 }
