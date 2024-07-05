@@ -66,6 +66,18 @@ function App() {
     return audio
   }
 
+  async function handleFormSubmission() {
+    if (!file && !audioStream) { return }
+    let audio = await readAudioFrom(file ? file : audioStream)
+    const model_name = `openai/whisper-tiny.en`
+
+     worker.current.postMessage({
+      type: MessageTypes.INFERENCE_REQUEST,
+      audio,
+      model_name
+     })
+  }
+
   return (
     <div className="flex flex-col max-w-[1000px] mx-auto w-full">
       <section className="min-h-screen flex flex-col">
